@@ -25,8 +25,25 @@ public class TreesHashSortingGraphs {
         deleteTree(myNode.right()); // go to the right child.
     }
     
-    public treeNode dLLToBBST(LinkedList myList, int length)
+    public treeNode dLLToBBST(LinkedList myList)
     {
+        treeNode root = new treeNode(myList.remove);
+        for(int i=0; i < myList.length(); i++)
+        {
+            Object temp = myList.remove();
+            insert(temp); // insert is typical tree insert
+            if(!root.isBalanced()) //if not a balanced tree
+            {
+                treeNode unBN = root.findUnbalance(); // find unbalanced node
+                root.singleRotation(unBN);
+            }
+            if(!root.isBalanced()) //if stil not balanced, do double rotation
+            {
+                root.doubleRotation(unBN);
+            }
+        }
+            
+        
         
     }
     
