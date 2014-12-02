@@ -1,3 +1,6 @@
+
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -77,36 +80,65 @@ public class TreesHashSortingGraphs {
         return count;
     }
     
+    /**
+     * Delete the minimum value. This takes log(n) time. Getting the min value
+     * takes constant time, but reordering the heap takes log(n) time. This 
+     * method assumes there is a count field that holds the number of nodes in
+     * the heap, and a method called leftChild() which grabs the left child
+     * node.
+     * @param Heap
+     * @return 
+     */
     public int deleteMin(int[] Heap)
     {
+        // Check if deletion can be done
         if (count == 0)
             return -1;
-        
-        int temp = Heap[0];
-        Heap[0] = Heap[count-1];
-        Heap[count-1] = temp;
+        // Next three steps are the swap of min
+        int minVal = Heap[0];
+        Heap[0] = Heap[count-1]; 
+        Heap[count-1] = minVal;
         count--;
+        
+        //Bubble Down
+        int parent = 0;
+        while(parent <= count/2)
+        {
+            int child = leftChild(parent); // 2*parent + 1 and checks it exists
+            // Compare right and left child for min key, unless last element
+            if (child < (count -1) && Heap[child] > Heap[child +1]) 
+                child++; // if right child is smaller, increment
+            if(Heap[parent] < Heap[child]) // If parent smaller than child..
+                return minVal; // ...return the minimum stored at temp
+            //swap parent and child
+            int temp = Heap[parent];
+            Heap[parent] = Heap[child]; 
+            Heap[child] = temp;
+            parent = child; //make child the new parent
+        }
     }
     
     /**
      * Question 9
      * Returns in an ArrayList all the elements that were less than a key value.
      * We traverse every array since at best, we do constant time and at worst
-     * we do liniear time. Assuming that averaqge is n/2, we still have linear
-     * time. So we may as well traverse the entire heap to find the elements.
+     * we do linear time. Assuming that average is n/2, we still have linear
+     * time. So we may as well traverse the entire heap to find the elements. 
+     * In this case count is a global field which holds the number of elements
+     * in the heap.
      * @param Heap
      * @param val
      * @return 
      */
     public ArrayList<Integer> findAllLess(int[] Heap, int val)
     {
-        ArrayList<Integer> retArr = new ArrayList<Integer>;
+        ArrayList retArr = new ArrayList();
         int j=0; // keeps track of return array position 
         for(int i=0; i <= count; i++)
         {
             if(val < Heap[i])
             {
-                retArr[j] = Heap[i];
+                retArr.add(Heap[i]);
                 j++;
             }
         }
