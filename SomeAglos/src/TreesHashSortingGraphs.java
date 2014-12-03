@@ -175,5 +175,28 @@ public class TreesHashSortingGraphs {
     
     /**
      * Question 17
+     * Does a Breadth First Search on a graph. Visits all the neighbors first
+     * before going further with search. This will take big O(n). Wi8ll need
+     * to visit every node in worse case to find the needed node.
+     * @param myGraph
+     * @param v 
      */
+    public BFS(Graph myGraph, int v)
+    {
+        Queue vertices = new Queue(); //create queue to keep track of vertices
+        vertices.enqueue(v); // enqueue start node
+        myGraph.setValue(v, "flag"); //flag start node
+        while(vertices.length() > 0) // Loop until all nodes are visited
+        {
+            v = vertices.dequeue(); // dequeue vertex
+            doSomethingTo(v); // process vertex
+            int[] neighbs = myGraph.neighbors(v); // find vertex neighbors
+            for(int i=0; neighbs.length > 0; i++) // loop through neighbors
+                if(!myGraph.getValue(neighbs[i]).equals("flag")) // if not visited
+                {
+                    myGraph.setValue(neighbs[i], "flag"); //flag as visited
+                    vertices.enqueue(neighbs[i]); // enqueue to search later.
+                }
+        }
+    }
 }
