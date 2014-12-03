@@ -30,27 +30,20 @@ public class TreesHashSortingGraphs {
     
     /**
      * Question 3:
-     * 
+     * Convert a sorted linked list to a balanced binary search tree. Since the
+     * list is already sorted, if we find half the list and make that the root,
+     * those nodes that are the left are then put in recursively, as well as 
+     * those in the right. This will create a balanced binary search tree.
      * @param myList
      * @return 
      */
     public treeNode dLLToBBST(LinkedList myList)
     {
-        treeNode root = new treeNode(myList.remove);
-        for(int i=0; i < myList.length(); i++)
-        {
-            Object temp = myList.remove();
-            insert(temp); // insert is typical tree insert
-            if(!root.isBalanced()) //if not a balanced tree
-            {
-                treeNode unBN = root.findUnbalance(); // find unbalanced node
-                root.singleRotation(unBN);
-            }
-            if(!root.isBalanced()) //if stil not balanced, do double rotation
-            {
-                root.doubleRotation(unBN);
-            }
-        }
+        int i = myList.length()/2; // find half-way point of list
+        treeNode rt = new treeNode(myList.get(i)); // made LLnode into treeNode
+        rt.setLeft(dLLToBBST(get list of elements < index i));
+        rt.setRight(dLLToBBST(get list of elements > index i))
+        return rt;
     }
     
     /**
